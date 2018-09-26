@@ -10,20 +10,33 @@ app = Flask(__name__)
 
 @app.route('/exclure', methods=['POST'])
 def post():
-    print "Content : " + str(request.headers['Content-Type'])
-    print "Json content: " + (request.json)
+    #print "Content : " + str(request.headers['Content-Type'])
+    #print "Json content: " + (request.json)
 
-    if request.headers['Content-Type'] == 'text/plain':
-        print "Text Message: " + request.data
+    #if request.headers['Content-Type'] == 'text/plain':
+    #    print "Text Message: " + request.data
 
-    elif request.headers['Content-Type'] == 'application/json':
-        print "JSON Message: " + json.dumps(request.json)
-    print ("===================================")
-    data = {
-        'status'  : 'success',
-    }
-    js = json.dumps(data)
-    resp = Response(js, status=200, mimetype='application/json')
+    #elif request.headers['Content-Type'] == 'application/json':
+    #    print "JSON Message: " + json.dumps(request.json)
+    resp = None
+    if request and request.form and "jsonData" in request.form:
+        print ("===========================================")
+        print "Json data: " + str(request.form['jsonData'])
+        print ("===========================================")
+        data = {
+            'status'  : 'success',
+        }
+        js = json.dumps(data)
+        resp = Response(js, status=200, mimetype='application/json')
+    else:
+        print ("===========================================")
+        print "Something went wrong"
+        print ("===========================================")
+        data = {
+            'status'  : 'error',
+        }
+        js = json.dumps(data)
+        resp = Response(js, status=200, mimetype='application/json')
     return resp
 
 

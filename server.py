@@ -10,7 +10,7 @@ class StringGenerator(object):
         return "Hello world!"
 
     @cherrypy.expose
-    def generate(self):
+    def exclude(self):
         return ''.join(random.sample(string.hexdigits, 8))
 
 
